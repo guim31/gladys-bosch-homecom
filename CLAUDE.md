@@ -31,16 +31,21 @@ pushing.
 ## Architecture
 
 ```
-index.js                          SDK wiring only: handlers registered before connect()
-src/devices/index.js              registry of the device blueprints + dispatch helpers
-src/devices/<type>.js             one device type per file (buildDevice, onPoll, onSetValue...)
-src/scenes.js                     scene action handlers (manifest `scene_actions`)
-src/widgets.js                    dashboard widget handlers (manifest `widgets`)
+index.js                          SDK wiring only: registerHandlers() then connect()
+src/app.js                        every SDK handler: link, discovery, refresh, commands, widget, trigger
+src/bosch/auth.js                 SingleKey ID: login address (PKCE), code exchange, token refresh
+src/bosch/client.js               pointt API client: gateway list, bulk reads, writes, token lifecycle
+src/bosch/model.js                Bosch resources → plain model of a gateway (heating or AC)
+src/devices.js                    Gladys devices, states, and command planning (bounds, options)
+src/poller.js                     the container's own refresh timer (+ onPoll fallback)
+src/widgets.js                    "Heating and hot water" widget content
+src/i18n.js                       every text in en/fr/de/es
 src/config.js                     DEFAULT_CONFIG (mirrors the manifest defaults) + normalization
-src/weather.js                    example driver (Open-Meteo)
+src/store.js, src/issues.js       /data persistence (atomic), repeated failures logged once
+scripts/probe.mjs                 live services, read-only, up to the refusal of a fake account
 gladys-assistant-integration.json manifest: name, config_schema, actions, image...
-docs/en.md, docs/fr.md            user documentation, re-hosted by Gladys (mandatory)
-test/                             node --test, against the SDK's fake Gladys (integration-sdk/testing)
+docs/{en,fr,de,es}.md             user documentation, re-hosted by Gladys (same sections)
+test/                             node --test, against the SDK's fake Gladys and test/helpers/fakeBosch.js
 .github/scripts/release.mjs       release helpers (manifest bump, changelog), tested in test/
 ```
 
@@ -70,8 +75,9 @@ test/                             node --test, against the SDK's fake Gladys (in
   `type: "provider"`: 5.1.0). `test/manifest.test.js` ties the manifest to the
   code (defaults, action, scene and widget handlers): change both sides
   together.
-- **User-facing text** is bilingual (English and French): action messages,
-  manifest texts, and `docs/en.md` / `docs/fr.md`, kept in sync.
+- **User-facing text** exists in English, French, German and Spanish (see
+  "Langues" below): action messages, manifest texts, feature names, widget
+  texts, and `docs/{en,fr,de,es}.md`, kept in sync (`test/i18n.test.js`).
 - **Style.** Prettier formats, ESLint catches mistakes. Comments explain why,
   in English. Tests never touch the network.
 
@@ -233,3 +239,52 @@ long, et sur un « Sie »/« Ihr… » de politesse en allemand. Le store exige 
 - Docs `en`, `fr`, `de`, `es` avec les mêmes sections.
 - Chauffe, ouverture, sécurité : ne rien rendre pilotable « comme un thermostat » ou par un assistant
   vocal quand une erreur serait dangereuse (leçon d'OctoPrint).
+
+## Bosch HomeCom Easy (cette intégration)
+
+**API** (non officielle, celle de l'appli ; référence : `homecom_alt` et `bosch-homecom-hass` de serbanb11, MIT)
+
+- Connexion SingleKey ID (`singlekey-id.com/auth/connect/{authorize,token}`), client public
+  `762162C0-…`, PKCE S256. La seule adresse de retour acceptée est celle de l'appli
+  (`com.bosch.tt.dashtt.pointt://app/login`, `com.buderus.tt.dashtt://app/login` pour Buderus) : aucun
+  navigateur ne l'ouvre, l'utilisateur copie le `code` à la main depuis les outils de développement. Le champ
+  `account_link` (Gladys ≥ 4.86) ouvre l'adresse ; un vérificateur PKCE neuf par clic, gardé dans `/data`.
+- Un code ne sert qu'une fois, et SingleKey ID le jette à la première réponse, bonne ou mauvaise : ne jamais
+  réessayer un code refusé (son empreinte est gardée dans `/data`). Injoignable, le code n'a pas servi : le
+  vérificateur est conservé.
+- Le jeton de rafraîchissement **tourne à chaque usage** : l'écrire dans `/data` avant d'utiliser le nouveau jeton
+  d'accès, et sérialiser les rafraîchissements (un seul en vol).
+- Lecture groupée : `POST /pointt-api/api/v1/bulk` `[{ gatewayId, resourcePaths }]`, 30 chemins au plus, chemins
+  **sans** le préfixe `/resource` (avec : 403 sur chaque chemin). Statut par chemin (`serverStatus`,
+  `gatewayResponse.status`) : un 404 est une ressource absente, pas une panne.
+- Écriture : `PUT /pointt-api/api/v1/gateways/{id}/resource{chemin}` `{ "value": … }`.
+- Enveloppe : `value`, `writeable`, `minValue`/`maxValue`, `allowedValues`, `unitOfMeasure`. Bornes et options des
+  fonctionnalités Gladys en viennent ; une sonde absente répond une valeur sentinelle (`-3276.8`).
+
+**Pièges relevés**
+
+- Consigne ambiante : en refroidissement, `cooling/roomTempSetpoint` (les autres répondent 404) ; ICOM :
+  `temporaryRoomSetpoint` ; K30/K40 : `manualRoomSetpoint` (sans effet immédiat en mode programme, comme dans
+  Home Assistant : à vérifier sur un appareil).
+- Eau chaude K40 : `operationMode` vaut `Off` avec une majuscule ; la consigne est celle du niveau actif
+  (`temperatureLevels/{high,low,eco}`), le mode lui-même quand c'est un niveau, sinon `currentTemperatureLevel`.
+- Un système sans ballon liste quand même `dhw1`, dont toutes les ressources répondent 404 (HA #174) : pas
+  d'appareil eau chaude dans ce cas.
+- `actualHeatDemand` : liste de demandes sur K40 (`ch`, `dhw`, `frost`), pourcentage sur ICOM (pas un état).
+  `emon/totalConsumption` : nombre sur ICOM (kWh), liste de compteurs sans total sur K40 (non publié).
+- Les modes HomeCom (programme/manuel/arrêt, éco/confort) n'ont pas d'équivalent exact dans `THERMOSTAT_MODE` ni
+  `WATER_HEATER_MODE` : ils sont publiés en `text/select` avec les `allowedValues` de l'appareil, plutôt qu'une
+  correspondance approximative. La climatisation, elle, a une correspondance exacte (`AC_MODE`, `AC_FAN_SPEED`).
+- Les climatiseurs mis en service via **Matter** (`bacon_rac`) passent par un autre service Bosch (MQTT) : non pris
+  en charge. `wddw2`, `rrc2`, `commodule` : non pris en charge (listés par « Tester la connexion »).
+- Le réseau de la session de code refuse `singlekey-id.com` et `pointt-api.bosch-thermotechnology.com` :
+  `scripts/probe.mjs` est à lancer d'une machine qui a le réseau.
+
+**Choix de conception**
+
+- Un appareil Gladys par chose qu'on place dans une pièce : générateur, circuit de chauffage, circuit d'eau chaude,
+  climatiseur. Identifiants : numéro de passerelle Bosch (+ `hcN`/`dhwN`).
+- Pas d'action de scène : chaque commande est déjà une fonctionnalité d'appareil. Un seul déclencheur, « nouveau
+  défaut », qui ne doublonne aucun état (le texte des défauts ne permet pas de réagir à l'apparition d'un code).
+  Les défauts présents à la liaison du compte ne déclenchent rien.
+- Rien de dangereux n'est exposé (courbes de chauffe, températures de départ maximales, désinfection thermique).
