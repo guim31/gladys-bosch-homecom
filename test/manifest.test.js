@@ -6,10 +6,14 @@
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { mkdtempSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { createFakeGladys } from '@gladysassistant/integration-sdk/testing';
 import { ACCOUNT_FIELD, ACTION_KEYS, SCENE_TRIGGERS, registerHandlers } from '../src/app.js';
 import { DEFAULT_CONFIG, REFRESH_MINUTES } from '../src/config.js';
+import { Store } from '../src/store.js';
 import { WIDGET_KEY } from '../src/widgets.js';
 import { createWorld } from './helpers/world.js';
 
@@ -34,7 +38,11 @@ const keysOf = (list) => (list ?? []).map((entry) => entry.key);
 // The handlers the integration registers, as the SDK's fake Gladys records
 // them: a declared key without handler would be "not implemented".
 const registered = createFakeGladys();
-const app = registerHandlers(registered, { timers: false, fetch: async () => new Response(null) });
+const app = registerHandlers(registered, {
+  store: new Store(mkdtempSync(join(tmpdir(), 'bosch-manifest-'))),
+  timers: false,
+  fetch: async () => new Response(null),
+});
 await app.ready;
 
 test('every manifest action has a registered handler', async () => {
