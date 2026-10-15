@@ -10,6 +10,8 @@ the notes of the version's GitHub Release.
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-15
+
 ### Added
 
 - Bosch heat pumps and boilers of the HomeCom Easy app (Connect-Key K 30 RF /
@@ -31,4 +33,5 @@ the notes of the version's GitHub Release.
   itself.
 - English, French, German and Spanish, documentation included.
 
-[Unreleased]: https://github.com/guim31/gladys-bosch-homecom/commits/main
+[Unreleased]: https://github.com/guim31/gladys-bosch-homecom/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/guim31/gladys-bosch-homecom/releases/tag/v1.0.1

@@ -8,8 +8,8 @@
     "de": "Bosch-Wärmepumpen, -Heizkessel und -Klimageräte der App HomeCom Easy, über die Bosch-Cloud.",
     "es": "Bombas de calor, calderas y aires acondicionados Bosch de la app HomeCom Easy, vía la nube Bosch."
   },
-  "version": "1.0.0",
-  "docker_image": "ghcr.io/guim31/gladys-bosch-homecom:1.0.0",
+  "version": "1.0.1",
+  "docker_image": "ghcr.io/guim31/gladys-bosch-homecom:1.0.1",
   "gladys_version": ">=5.1.0",
   "cover_image": "https://raw.githubusercontent.com/guim31/gladys-bosch-homecom/main/cover.png",
   "categories": ["climate"],
