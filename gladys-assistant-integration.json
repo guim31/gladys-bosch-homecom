@@ -1,177 +1,292 @@
 {
   "manifest_version": 1,
   "type": "device",
-  "name": "Demo Devices Template",
+  "name": "Bosch HomeCom Easy",
   "description": {
-    "en": "Starter template showing sensors, a switch, a dimmable light and a smart plug.",
-    "fr": "Template de démarrage : capteurs, interrupteur, lampe variable et prise connectée."
+    "en": "Bosch heat pumps, boilers and air conditioners of the HomeCom Easy app, through the Bosch cloud.",
+    "fr": "Pompes à chaleur, chaudières et climatiseurs Bosch de l'appli HomeCom Easy, via le cloud Bosch.",
+    "de": "Bosch-Wärmepumpen, -Heizkessel und -Klimageräte der App HomeCom Easy, über die Bosch-Cloud.",
+    "es": "Bombas de calor, calderas y aires acondicionados Bosch de la app HomeCom Easy, vía la nube Bosch."
   },
   "version": "1.0.0",
-  "docker_image": "ghcr.io/gladysassistant/integration-template-js:1.0.0",
+  "docker_image": "ghcr.io/guim31/gladys-bosch-homecom:1.0.0",
   "gladys_version": ">=5.1.0",
-  "cover_image": "https://raw.githubusercontent.com/GladysAssistant/integration-template-js/master/cover.png",
-  "categories": ["lighting", "security", "environment"],
-  "transports": ["local", "cloud"],
+  "cover_image": "https://raw.githubusercontent.com/guim31/gladys-bosch-homecom/main/cover.png",
+  "categories": ["climate"],
+  "transports": ["cloud"],
   "config_schema": [
     {
       "key": "intro",
       "type": "section",
-      "label": { "en": "Getting started", "fr": "Pour commencer" },
+      "label": {
+        "en": "Bosch HomeCom Easy",
+        "fr": "Bosch HomeCom Easy",
+        "de": "Bosch HomeCom Easy",
+        "es": "Bosch HomeCom Easy"
+      },
       "description": {
-        "en": "The demo weather station reads real data from the free Open-Meteo API: pick the coordinates to observe. No account, no API key.",
-        "fr": "La station météo de démonstration lit de vraies données via l'API gratuite Open-Meteo : choisissez les coordonnées à observer. Pas de compte, pas de clé d'API."
+        "en": "Reads and controls the Bosch appliances of your HomeCom Easy account through the Bosch cloud: heat pumps and boilers on a K 30 RF / K 40 RF or ICOM gateway, Climate air conditioners. Not affiliated with Bosch. Developed without the hardware: feedback welcome.",
+        "fr": "Lit et pilote les appareils Bosch de votre compte HomeCom Easy via le cloud Bosch : pompes à chaleur et chaudières sur passerelle K 30 RF / K 40 RF ou ICOM, climatiseurs Climate. Sans lien avec Bosch. Développée sans le matériel : vos retours sont les bienvenus.",
+        "de": "Liest und steuert die Bosch-Geräte deines HomeCom-Easy-Kontos über die Bosch-Cloud: Wärmepumpen und Heizkessel an einem K 30 RF / K 40 RF oder ICOM, Climate-Klimageräte. Nicht mit Bosch verbunden. Ohne die Hardware entwickelt: Rückmeldungen willkommen.",
+        "es": "Lee y controla los aparatos Bosch de su cuenta HomeCom Easy a través de la nube Bosch: bombas de calor y calderas con pasarela K 30 RF / K 40 RF o ICOM, aires acondicionados Climate. Sin relación con Bosch. Desarrollada sin el hardware: se agradecen los comentarios."
       },
       "links": [
         {
-          "url": "https://open-meteo.com/en/docs",
-          "label": { "en": "Open-Meteo documentation", "fr": "Documentation Open-Meteo" }
+          "url": "https://github.com/guim31/gladys-bosch-homecom/blob/main/docs/en.md",
+          "label": {
+            "en": "Step-by-step guide",
+            "fr": "Guide pas à pas",
+            "de": "Schritt-für-Schritt-Anleitung",
+            "es": "Guía paso a paso"
+          }
         }
       ]
     },
     {
-      "key": "latitude",
-      "type": "number",
-      "label": { "en": "Latitude", "fr": "Latitude" },
-      "description": {
-        "en": "Latitude used for the demo weather sensor.",
-        "fr": "Latitude utilisée par le capteur météo de démonstration."
-      },
-      "placeholder": { "en": "e.g. 48.8566", "fr": "ex. 48.8566" },
-      "required": true,
-      "default": 48.8566,
-      "min": -90,
-      "max": 90
-    },
-    {
-      "key": "longitude",
-      "type": "number",
-      "label": { "en": "Longitude", "fr": "Longitude" },
-      "description": {
-        "en": "Longitude used for the demo weather sensor.",
-        "fr": "Longitude utilisée par le capteur météo de démonstration."
-      },
-      "placeholder": { "en": "e.g. 2.3522", "fr": "ex. 2.3522" },
-      "required": true,
-      "default": 2.3522,
-      "min": -180,
-      "max": 180
-    },
-    {
-      "key": "unit",
+      "key": "brand",
       "type": "select",
-      "label": { "en": "Temperature unit", "fr": "Unité de température" },
+      "label": {
+        "en": "App brand",
+        "fr": "Marque de l'appli",
+        "de": "Marke der App",
+        "es": "Marca de la app"
+      },
+      "description": {
+        "en": "The app you use: Bosch HomeCom Easy, or Buderus MyDevice. Save before clicking \"Connect\".",
+        "fr": "L'appli que vous utilisez : Bosch HomeCom Easy, ou Buderus MyDevice. Enregistrez avant de cliquer sur « Se connecter ».",
+        "de": "Die App, die du nutzt: Bosch HomeCom Easy oder Buderus MyDevice. Speichere, bevor du auf „Verbinden“ klickst.",
+        "es": "La app que usa: Bosch HomeCom Easy o Buderus MyDevice. Guarde antes de hacer clic en «Conectar»."
+      },
       "required": false,
-      "default": "celsius",
+      "default": "bosch",
       "options": [
-        { "value": "celsius", "label": { "en": "Celsius", "fr": "Celsius" } },
-        { "value": "fahrenheit", "label": { "en": "Fahrenheit", "fr": "Fahrenheit" } }
+        {
+          "value": "bosch",
+          "label": {
+            "en": "Bosch HomeCom Easy",
+            "fr": "Bosch HomeCom Easy",
+            "de": "Bosch HomeCom Easy",
+            "es": "Bosch HomeCom Easy"
+          }
+        },
+        {
+          "value": "buderus",
+          "label": {
+            "en": "Buderus MyDevice",
+            "fr": "Buderus MyDevice",
+            "de": "Buderus MyDevice",
+            "es": "Buderus MyDevice"
+          }
+        }
       ]
     },
     {
-      "key": "poll_frequency",
-      "type": "number",
-      "label": { "en": "Refresh interval (s)", "fr": "Intervalle de rafraîchissement (s)" },
+      "key": "login_steps",
+      "type": "section",
+      "label": {
+        "en": "Sign in to your Bosch account",
+        "fr": "Connexion à votre compte Bosch",
+        "de": "Anmeldung bei deinem Bosch-Konto",
+        "es": "Inicio de sesión en su cuenta Bosch"
+      },
       "description": {
-        "en": "How often sensors are polled, in seconds (one minute minimum).",
-        "fr": "Fréquence d'interrogation des capteurs, en secondes (une minute minimum)."
+        "en": "1. Click \"Connect\": the Bosch sign-in page opens in a new tab. 2. In that tab, press F12 and open the Network tab, then sign in with your SingleKey ID. 3. The last page fails to open (normal): in the Network tab, copy the value after \"code=\" (it ends with \"-1\"). 4. Paste it below and save within a minute.",
+        "fr": "1. Cliquez sur « Se connecter » : la page de connexion Bosch s'ouvre dans un nouvel onglet. 2. Dans cet onglet, appuyez sur F12 et ouvrez l'onglet Réseau, puis identifiez-vous avec votre SingleKey ID. 3. La dernière page ne s'ouvre pas (normal) : dans l'onglet Réseau, copiez la valeur après « code= » (elle finit par « -1 »). 4. Collez-la ci-dessous et enregistrez dans la minute.",
+        "de": "1. Klicke auf „Verbinden“: Die Bosch-Anmeldeseite öffnet sich in einem neuen Tab. 2. Drücke dort F12, öffne den Tab Netzwerk und melde dich dann mit deiner SingleKey ID an. 3. Die letzte Seite öffnet sich nicht (normal): Kopiere im Tab Netzwerk den Wert nach „code=“ (er endet auf „-1“). 4. Füge ihn unten ein und speichere innerhalb einer Minute.",
+        "es": "1. Haga clic en «Conectar»: la página de inicio de sesión de Bosch se abre en una pestaña nueva. 2. En esa pestaña, pulse F12 y abra la pestaña Red; después inicie sesión con su SingleKey ID. 3. La última página no se abre (es normal): en la pestaña Red, copie el valor tras «code=» (termina en «-1»). 4. Péguelo abajo y guarde en menos de un minuto."
+      }
+    },
+    {
+      "key": "bosch_account",
+      "type": "account_link",
+      "label": {
+        "en": "Bosch account (SingleKey ID)",
+        "fr": "Compte Bosch (SingleKey ID)",
+        "de": "Bosch-Konto (SingleKey ID)",
+        "es": "Cuenta Bosch (SingleKey ID)"
+      },
+      "description": {
+        "en": "Opens the Bosch sign-in page. Your password never reaches Gladys.",
+        "fr": "Ouvre la page de connexion Bosch. Votre mot de passe ne passe jamais par Gladys.",
+        "de": "Öffnet die Bosch-Anmeldeseite. Dein Passwort erreicht Gladys nie.",
+        "es": "Abre la página de inicio de sesión de Bosch. Su contraseña nunca llega a Gladys."
+      }
+    },
+    {
+      "key": "auth_code",
+      "type": "secret",
+      "label": {
+        "en": "Authorization code",
+        "fr": "Code d’autorisation",
+        "de": "Autorisierungscode",
+        "es": "Código de autorización"
+      },
+      "description": {
+        "en": "The code copied after signing in, used once. The whole address with \"code=\" also works.",
+        "fr": "Le code copié après la connexion, utilisé une seule fois. L'adresse entière avec « code= » fonctionne aussi.",
+        "de": "Der nach der Anmeldung kopierte Code, wird einmal verwendet. Die ganze Adresse mit „code=“ geht auch.",
+        "es": "El código copiado tras iniciar sesión, se usa una sola vez. También sirve la dirección completa con «code=»."
+      },
+      "placeholder": {
+        "en": "e.g. 3B1F…-1",
+        "fr": "ex. 3B1F…-1",
+        "de": "z. B. 3B1F…-1",
+        "es": "p. ej. 3B1F…-1"
+      },
+      "required": false
+    },
+    {
+      "key": "refresh_minutes",
+      "type": "number",
+      "label": {
+        "en": "Refresh interval (minutes)",
+        "fr": "Intervalle de rafraîchissement (minutes)",
+        "de": "Aktualisierungsintervall (Minuten)",
+        "es": "Intervalo de actualización (minutos)"
+      },
+      "description": {
+        "en": "How often the Bosch cloud is read: 2 minutes minimum, so as not to overload it.",
+        "fr": "Fréquence de lecture du cloud Bosch : 2 minutes minimum, pour ne pas le surcharger.",
+        "de": "Wie oft die Bosch-Cloud abgefragt wird: mindestens 2 Minuten, um sie nicht zu überlasten.",
+        "es": "Frecuencia de lectura de la nube Bosch: 2 minutos como mínimo, para no sobrecargarla."
       },
       "required": false,
-      "default": 300,
-      "min": 60,
-      "max": 3600
+      "default": 5,
+      "min": 2,
+      "max": 60
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "label": {
+        "en": "Language of the device names",
+        "fr": "Langue des noms d'appareils",
+        "de": "Sprache der Gerätenamen",
+        "es": "Idioma de los nombres de aparatos"
+      },
+      "description": {
+        "en": "Names of the devices and features, written when you add them.",
+        "fr": "Noms des appareils et fonctionnalités, écrits quand vous les ajoutez.",
+        "de": "Namen der Geräte und Funktionen, festgelegt beim Hinzufügen.",
+        "es": "Nombres de los aparatos y funciones, fijados al añadirlos."
+      },
+      "required": false,
+      "default": "fr",
+      "options": [
+        {
+          "value": "en",
+          "label": { "en": "English", "fr": "Anglais", "de": "Englisch", "es": "Inglés" }
+        },
+        {
+          "value": "fr",
+          "label": { "en": "French", "fr": "Français", "de": "Französisch", "es": "Francés" }
+        },
+        {
+          "value": "de",
+          "label": { "en": "German", "fr": "Allemand", "de": "Deutsch", "es": "Alemán" }
+        },
+        {
+          "value": "es",
+          "label": { "en": "Spanish", "fr": "Espagnol", "de": "Spanisch", "es": "Español" }
+        }
+      ]
     }
   ],
   "actions": [
     {
-      "key": "test_weather",
-      "label": { "en": "Test the weather provider", "fr": "Tester le fournisseur météo" },
+      "key": "test_connection",
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
+      },
       "timeout_seconds": 30
-    },
-    {
-      "key": "identify",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
-      "fields": [
-        {
-          "key": "device",
-          "type": "select",
-          "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
-          "required": true
-        }
-      ]
     }
   ],
   "scene_triggers": [
     {
-      "key": "motion_detected",
-      "label": { "en": "Motion detected", "fr": "Mouvement détecté" },
+      "key": "fault_reported",
+      "label": {
+        "en": "Bosch fault reported",
+        "fr": "Défaut Bosch signalé",
+        "de": "Bosch-Störung gemeldet",
+        "es": "Avería Bosch notificada"
+      },
       "description": {
-        "en": "A demo motion sensor saw a person or an animal move.",
-        "fr": "Un détecteur de démonstration a vu bouger une personne ou un animal."
+        "en": "A heat pump, boiler or air conditioner reports a new fault code in HomeCom Easy.",
+        "fr": "Une pompe à chaleur, une chaudière ou un climatiseur signale un nouveau code de défaut dans HomeCom Easy.",
+        "de": "Eine Wärmepumpe, ein Heizkessel oder ein Klimagerät meldet einen neuen Störungscode in HomeCom Easy.",
+        "es": "Una bomba de calor, una caldera o un aire acondicionado notifica un nuevo código de avería en HomeCom Easy."
       },
       "fields": [
         {
           "key": "device",
           "type": "select",
           "source": "devices",
-          "label": { "en": "Sensor", "fr": "Détecteur" }
-        },
-        {
-          "key": "target",
-          "type": "multi_select",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" },
-          "options": [
-            { "value": "person", "label": { "en": "Person", "fr": "Personne" } },
-            { "value": "animal", "label": { "en": "Animal", "fr": "Animal" } }
-          ]
+          "label": {
+            "en": "Appliance",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Aparato"
+          },
+          "description": {
+            "en": "The heat generator or the air conditioner. Leave empty for any of them.",
+            "fr": "Le générateur de chaleur ou le climatiseur. Laissez vide pour n'importe lequel.",
+            "de": "Der Wärmeerzeuger oder das Klimagerät. Leer lassen für jedes Gerät.",
+            "es": "El generador de calor o el aire acondicionado. Déjelo vacío para cualquiera."
+          }
         }
       ],
       "variables": [
         {
-          "key": "target",
+          "key": "code",
           "type": "string",
-          "label": { "en": "What moved", "fr": "Ce qui a bougé" }
-        }
-      ]
-    }
-  ],
-  "scene_actions": [
-    {
-      "key": "identify_device",
-      "label": { "en": "Identify a device", "fr": "Identifier un appareil" },
-      "description": {
-        "en": "Make a device signal itself (the demo light blinks).",
-        "fr": "Fait se signaler un appareil (la lampe de démonstration clignote)."
-      },
-      "timeout_seconds": 15,
-      "fields": [
-        {
-          "key": "device",
-          "type": "select",
-          "source": "devices",
-          "label": { "en": "Device", "fr": "Appareil" },
-          "required": true
-        }
-      ],
-      "outputs": [
-        {
-          "key": "signalled",
-          "type": "boolean",
-          "label": { "en": "Device signalled", "fr": "Appareil signalé" }
+          "label": {
+            "en": "Fault code",
+            "fr": "Code de défaut",
+            "de": "Störungscode",
+            "es": "Código de avería"
+          }
         }
       ]
     }
   ],
   "widgets": [
     {
-      "key": "demo_status",
-      "label": { "en": "Demo status", "fr": "État de la démo" },
-      "description": {
-        "en": "Live temperature and plug power, plug connection and observed location.",
-        "fr": "Température et puissance en direct, connexion de la prise, position observée."
+      "key": "heating_overview",
+      "label": {
+        "en": "Heating and hot water",
+        "fr": "Chauffage et eau chaude",
+        "de": "Heizung und Warmwasser",
+        "es": "Calefacción y agua caliente"
       },
-      "icon": "activity",
-      "action_timeout_seconds": 15
+      "description": {
+        "en": "Room and hot water temperatures, modes, generator state and faults.",
+        "fr": "Températures ambiante et d'eau chaude, modes, état du générateur et défauts.",
+        "de": "Raum- und Warmwassertemperatur, Modi, Status des Wärmeerzeugers, Störungen.",
+        "es": "Temperaturas ambiente y de agua caliente, modos, estado del generador y averías."
+      },
+      "icon": "thermometer",
+      "settings": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Heating system",
+            "fr": "Installation de chauffage",
+            "de": "Heizungsanlage",
+            "es": "Instalación de calefacción"
+          },
+          "description": {
+            "en": "Any device of the system. Empty: the first one.",
+            "fr": "N'importe quel appareil de l'installation. Vide : la première.",
+            "de": "Ein beliebiges Gerät der Anlage. Leer: die erste.",
+            "es": "Cualquier aparato de la instalación. Vacío: la primera."
+          }
+        }
+      ]
     }
   ]
 }

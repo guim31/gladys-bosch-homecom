@@ -28,8 +28,23 @@ Gladys before reporting a problem.
 
 ## Scope
 
-In scope: the code of this repository and the Docker image it publishes.
+In scope: the code of this repository and the Docker image it publishes, in
+particular:
+
+- the sign-in: the PKCE verifier of the login in progress, the code pasted in
+  the configuration (exchanged once, never logged) and the SingleKey ID
+  **refresh token**, the only lasting secret, kept in
+  `/data/bosch-homecom.json` (mode 600) and rotated at every use. The access
+  token lives in memory only;
+- what else `/data/bosch-homecom.json` holds: the appliances seen last
+  (gateway ids, which are the appliance serial numbers) and the fault codes
+  already reported;
+- the network: HTTPS to `singlekey-id.com` and
+  `pointt-api.bosch-thermotechnology.com` only; no port is opened, nothing is
+  listened to;
+- the logs: no password, token, code or verifier at any level.
 
 Out of scope: Gladys Assistant itself (see its
 [security policy](https://github.com/GladysAssistant/Gladys/security/policy)),
-and the third-party services and devices the integration talks to.
+the Bosch services and appliances the integration talks to (report those to
+Bosch), and the SingleKey ID account itself.

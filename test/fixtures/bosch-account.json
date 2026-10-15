@@ -1,0 +1,675 @@
+{
+  "_comment": "A Bosch account with one gateway of each kind. Gateway ids are invented.",
+  "gateways": [
+    {
+      "deviceId": "101000001",
+      "deviceType": "k40",
+      "firmwareVersion": "07.10.00"
+    },
+    {
+      "deviceId": "101000002",
+      "deviceType": "icom"
+    },
+    {
+      "deviceId": "101000003",
+      "deviceType": "rac"
+    },
+    {
+      "deviceId": "101000004",
+      "deviceType": "k30"
+    },
+    {
+      "deviceId": "101000005",
+      "deviceType": "wddw2"
+    }
+  ],
+  "resources": {
+    "101000001": {
+      "_comment": "Compress 6800i AW on a Connect-Key K 40 RF (deviceType k40): one heating circuit, one hot water tank. Resource envelopes and values follow the payloads of the homecom_alt and bosch-homecom-hass tests (MIT, serbanb11); invented gateway id.",
+      "/notifications": {
+        "id": "/notifications",
+        "type": "errorList",
+        "writeable": 0,
+        "recordable": 0,
+        "values": [
+          {
+            "dcd": "A11",
+            "ccd": "1010",
+            "act": "H",
+            "fc": "8"
+          }
+        ]
+      },
+      "/heatingCircuits": {
+        "id": "/heatingCircuits",
+        "type": "refEnum",
+        "references": [
+          {
+            "id": "/heatingCircuits/hc1",
+            "uri": "https://pointt-api.bosch-thermotechnology.com/pointt-api/api/v1/gateways/GATEWAY/resource/heatingCircuits/hc1"
+          }
+        ]
+      },
+      "/dhwCircuits": {
+        "id": "/dhwCircuits",
+        "type": "refEnum",
+        "references": [
+          {
+            "id": "/dhwCircuits/dhw1",
+            "uri": "https://pointt-api.bosch-thermotechnology.com/pointt-api/api/v1/gateways/GATEWAY/resource/dhwCircuits/dhw1"
+          }
+        ]
+      },
+      "/system/sensors/temperatures/outdoor_t1": {
+        "id": "/system/sensors/temperatures/outdoor_t1",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 7.5,
+        "unitOfMeasure": "C"
+      },
+      "/heatSources/actualSupplyTemperature": {
+        "id": "/heatSources/actualSupplyTemperature",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 34.2,
+        "unitOfMeasure": "C"
+      },
+      "/heatSources/returnTemperature": {
+        "id": "/heatSources/returnTemperature",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 29.8,
+        "unitOfMeasure": "C"
+      },
+      "/heatSources/systemPressure": {
+        "id": "/heatSources/systemPressure",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 1.6,
+        "unitOfMeasure": "bar"
+      },
+      "/heatSources/actualHeatDemand": {
+        "id": "/heatSources/actualHeatDemand",
+        "type": "stringArray",
+        "writeable": 0,
+        "recordable": 0,
+        "values": ["ch"]
+      },
+      "/heatSources/emon/totalConsumption": {
+        "id": "/heatSources/emon/totalConsumption",
+        "type": "arrayData",
+        "writeable": 0,
+        "recordable": 0,
+        "values": [
+          {
+            "outputProduced": 5123
+          },
+          {
+            "eheater": 87
+          },
+          {
+            "compressor": 1490
+          }
+        ]
+      },
+      "/heatingCircuits/hc1/operationMode": {
+        "id": "/heatingCircuits/hc1/operationMode",
+        "type": "stringValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": "auto",
+        "allowedValues": ["off", "manual", "auto"]
+      },
+      "/heatingCircuits/hc1/roomtemperature": {
+        "id": "/heatingCircuits/hc1/roomtemperature",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 20.6,
+        "unitOfMeasure": "C"
+      },
+      "/heatingCircuits/hc1/actualHumidity": {
+        "id": "/heatingCircuits/hc1/actualHumidity",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 48,
+        "unitOfMeasure": "%"
+      },
+      "/heatingCircuits/hc1/currentRoomSetpoint": {
+        "id": "/heatingCircuits/hc1/currentRoomSetpoint",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 21.0,
+        "unitOfMeasure": "C",
+        "minValue": 5,
+        "maxValue": 30
+      },
+      "/heatingCircuits/hc1/manualRoomSetpoint": {
+        "id": "/heatingCircuits/hc1/manualRoomSetpoint",
+        "type": "floatValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": 20.0,
+        "unitOfMeasure": "C",
+        "minValue": 5,
+        "maxValue": 30
+      },
+      "/heatingCircuits/hc1/currentSuWiMode": {
+        "id": "/heatingCircuits/hc1/currentSuWiMode",
+        "type": "stringValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": "forced",
+        "allowedValues": ["off", "forced", "cooling"]
+      },
+      "/heatingCircuits/hc1/heatCoolMode": {
+        "id": "/heatingCircuits/hc1/heatCoolMode",
+        "type": "stringValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": "heating",
+        "allowedValues": ["heating", "cooling"]
+      },
+      "/dhwCircuits/dhw1/operationMode": {
+        "id": "/dhwCircuits/dhw1/operationMode",
+        "type": "stringValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": "high",
+        "allowedValues": ["Off", "eco", "low", "high", "ownprogram"]
+      },
+      "/dhwCircuits/dhw1/actualTemp": {
+        "id": "/dhwCircuits/dhw1/actualTemp",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 51.5,
+        "unitOfMeasure": "C"
+      },
+      "/dhwCircuits/dhw1/currentTemperatureLevel": {
+        "id": "/dhwCircuits/dhw1/currentTemperatureLevel",
+        "type": "stringValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": "high",
+        "allowedValues": ["off", "eco", "low", "high"]
+      },
+      "/dhwCircuits/dhw1/charge": {
+        "id": "/dhwCircuits/dhw1/charge",
+        "type": "stringValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": "stop",
+        "allowedValues": ["start", "stop"]
+      },
+      "/dhwCircuits/dhw1/temperatureLevels/high": {
+        "id": "/dhwCircuits/dhw1/temperatureLevels/high",
+        "type": "floatValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": 55,
+        "unitOfMeasure": "C",
+        "minValue": 30,
+        "maxValue": 60
+      },
+      "/dhwCircuits/dhw1/temperatureLevels/low": {
+        "id": "/dhwCircuits/dhw1/temperatureLevels/low",
+        "type": "floatValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": 45,
+        "unitOfMeasure": "C",
+        "minValue": 30,
+        "maxValue": 60
+      },
+      "/dhwCircuits/dhw1/temperatureLevels/eco": {
+        "id": "/dhwCircuits/dhw1/temperatureLevels/eco",
+        "type": "floatValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": 40,
+        "unitOfMeasure": "C",
+        "minValue": 30,
+        "maxValue": 50
+      }
+    },
+    "101000002": {
+      "_comment": "Compress 7000i AW (deviceType icom): two heating circuits, one hot water tank. Resource envelopes and values follow the payloads of the homecom_alt tests (MIT, serbanb11); invented gateway id.",
+      "/notifications": {
+        "id": "/notifications",
+        "type": "errorList",
+        "writeable": 0,
+        "recordable": 0,
+        "values": []
+      },
+      "/heatingCircuits": {
+        "id": "/heatingCircuits",
+        "type": "refEnum",
+        "references": [
+          {
+            "id": "/heatingCircuits/hc1",
+            "uri": "https://pointt-api.bosch-thermotechnology.com/pointt-api/api/v1/gateways/GATEWAY/resource/heatingCircuits/hc1"
+          },
+          {
+            "id": "/heatingCircuits/hc2",
+            "uri": "https://pointt-api.bosch-thermotechnology.com/pointt-api/api/v1/gateways/GATEWAY/resource/heatingCircuits/hc2"
+          }
+        ]
+      },
+      "/dhwCircuits": {
+        "id": "/dhwCircuits",
+        "type": "refEnum",
+        "references": [
+          {
+            "id": "/dhwCircuits/dhw1",
+            "uri": "https://pointt-api.bosch-thermotechnology.com/pointt-api/api/v1/gateways/GATEWAY/resource/dhwCircuits/dhw1"
+          }
+        ]
+      },
+      "/system/sensors/temperatures/outdoor_t1": {
+        "id": "/system/sensors/temperatures/outdoor_t1",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": -2.4,
+        "unitOfMeasure": "C"
+      },
+      "/heatSources/actualSupplyTemperature": {
+        "id": "/heatSources/actualSupplyTemperature",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 38.0,
+        "unitOfMeasure": "C"
+      },
+      "/heatSources/returnTemperature": {
+        "id": "/heatSources/returnTemperature",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 43.1,
+        "unitOfMeasure": "C"
+      },
+      "/heatSources/systemPressure": {
+        "id": "/heatSources/systemPressure",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 1.8,
+        "unitOfMeasure": "bar"
+      },
+      "/heatSources/actualHeatDemand": {
+        "id": "/heatSources/actualHeatDemand",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 80,
+        "unitOfMeasure": "%"
+      },
+      "/heatSources/emon/totalConsumption": {
+        "id": "/heatSources/emon/totalConsumption",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 1234.5,
+        "unitOfMeasure": "kWh"
+      },
+      "/heatingCircuits/hc1/operationMode": {
+        "id": "/heatingCircuits/hc1/operationMode",
+        "type": "stringValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": "auto",
+        "allowedValues": ["manual", "auto"]
+      },
+      "/heatingCircuits/hc1/roomtemperature": {
+        "id": "/heatingCircuits/hc1/roomtemperature",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 20.5,
+        "unitOfMeasure": "C"
+      },
+      "/heatingCircuits/hc1/currentRoomSetpoint": {
+        "id": "/heatingCircuits/hc1/currentRoomSetpoint",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 21.0,
+        "unitOfMeasure": "C",
+        "minValue": 5,
+        "maxValue": 30
+      },
+      "/heatingCircuits/hc1/manualRoomSetpoint": {
+        "id": "/heatingCircuits/hc1/manualRoomSetpoint",
+        "type": "floatValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": 21.0,
+        "unitOfMeasure": "C",
+        "minValue": 5,
+        "maxValue": 30
+      },
+      "/heatingCircuits/hc1/temporaryRoomSetpoint": {
+        "id": "/heatingCircuits/hc1/temporaryRoomSetpoint",
+        "type": "floatValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": 23.0,
+        "unitOfMeasure": "C",
+        "minValue": 5,
+        "maxValue": 30
+      },
+      "/heatingCircuits/hc1/currentSuWiMode": {
+        "id": "/heatingCircuits/hc1/currentSuWiMode",
+        "type": "stringValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": "winter"
+      },
+      "/heatingCircuits/hc2/operationMode": {
+        "id": "/heatingCircuits/hc2/operationMode",
+        "type": "stringValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": "manual",
+        "allowedValues": ["manual", "auto"]
+      },
+      "/heatingCircuits/hc2/roomtemperature": {
+        "id": "/heatingCircuits/hc2/roomtemperature",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": -3276.8,
+        "unitOfMeasure": "C"
+      },
+      "/heatingCircuits/hc2/currentRoomSetpoint": {
+        "id": "/heatingCircuits/hc2/currentRoomSetpoint",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 19.0,
+        "unitOfMeasure": "C",
+        "minValue": 5,
+        "maxValue": 30
+      },
+      "/heatingCircuits/hc2/manualRoomSetpoint": {
+        "id": "/heatingCircuits/hc2/manualRoomSetpoint",
+        "type": "floatValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": 19.0,
+        "unitOfMeasure": "C",
+        "minValue": 5,
+        "maxValue": 30
+      },
+      "/heatingCircuits/hc2/temporaryRoomSetpoint": {
+        "id": "/heatingCircuits/hc2/temporaryRoomSetpoint",
+        "type": "floatValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": 19.0,
+        "unitOfMeasure": "C",
+        "minValue": 5,
+        "maxValue": 30
+      },
+      "/heatingCircuits/hc2/currentSuWiMode": {
+        "id": "/heatingCircuits/hc2/currentSuWiMode",
+        "type": "stringValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": "winter"
+      },
+      "/dhwCircuits/dhw1/operationMode": {
+        "id": "/dhwCircuits/dhw1/operationMode",
+        "type": "stringValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": "ownprogram",
+        "allowedValues": ["off", "low", "high", "ownprogram"]
+      },
+      "/dhwCircuits/dhw1/actualTemp": {
+        "id": "/dhwCircuits/dhw1/actualTemp",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 51.3,
+        "unitOfMeasure": "C"
+      },
+      "/dhwCircuits/dhw1/currentTemperatureLevel": {
+        "id": "/dhwCircuits/dhw1/currentTemperatureLevel",
+        "type": "stringValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": "high",
+        "allowedValues": ["off", "low", "high"]
+      },
+      "/dhwCircuits/dhw1/currentSetpoint": {
+        "id": "/dhwCircuits/dhw1/currentSetpoint",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 55.0,
+        "unitOfMeasure": "C"
+      },
+      "/dhwCircuits/dhw1/charge": {
+        "id": "/dhwCircuits/dhw1/charge",
+        "type": "stringValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": "stop",
+        "allowedValues": ["start", "stop"]
+      },
+      "/dhwCircuits/dhw1/temperatureLevels/high": {
+        "id": "/dhwCircuits/dhw1/temperatureLevels/high",
+        "type": "floatValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": 55,
+        "unitOfMeasure": "C",
+        "minValue": 30,
+        "maxValue": 60
+      },
+      "/dhwCircuits/dhw1/temperatureLevels/low": {
+        "id": "/dhwCircuits/dhw1/temperatureLevels/low",
+        "type": "floatValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": 40,
+        "unitOfMeasure": "C",
+        "minValue": 30,
+        "maxValue": 60
+      }
+    },
+    "101000003": {
+      "_comment": "Climate 5000i (deviceType rac). The airConditioning resources are those of the bosch-homecom-hass test fixture (tests/fixtures/bosch_homecom.json, MIT, serbanb11), the room temperature adjusted; invented gateway id.",
+      "/notifications": {
+        "id": "/notifications",
+        "type": "errorList",
+        "writeable": 0,
+        "recordable": 0,
+        "values": []
+      },
+      "/airConditioning/standardFunctions": {
+        "id": "/airConditioning/standardFunctions",
+        "type": "refEnum",
+        "references": [
+          {
+            "id": "/airConditioning/operationMode",
+            "type": "stringValue",
+            "writeable": 1,
+            "recordable": 0,
+            "value": "auto",
+            "allowedValues": ["auto", "heat", "cool", "dry", "fanOnly"]
+          },
+          {
+            "id": "/airConditioning/acControl",
+            "type": "stringValue",
+            "writeable": 1,
+            "recordable": 0,
+            "value": "off",
+            "allowedValues": ["on", "off"]
+          },
+          {
+            "id": "/airConditioning/fanSpeed",
+            "type": "stringValue",
+            "writeable": 1,
+            "recordable": 0,
+            "value": "quiet",
+            "allowedValues": ["auto", "quiet", "low", "mid", "high"]
+          },
+          {
+            "id": "/airConditioning/airFlowHorizontal",
+            "type": "stringValue",
+            "writeable": 1,
+            "recordable": 0,
+            "value": "center",
+            "allowedValues": ["center", "left", "right", "swing"]
+          },
+          {
+            "id": "/airConditioning/airFlowVertical",
+            "type": "stringValue",
+            "writeable": 1,
+            "recordable": 0,
+            "value": "auto",
+            "allowedValues": ["auto", "angle1", "angle2", "angle3", "angle4", "swing"]
+          },
+          {
+            "id": "/airConditioning/temperatureSetpoint",
+            "type": "floatValue",
+            "writeable": 1,
+            "recordable": 0,
+            "value": 25.0,
+            "unitOfMeasure": "C",
+            "minValue": 16.0,
+            "maxValue": 30.0
+          },
+          {
+            "id": "/airConditioning/roomTemperature",
+            "type": "floatValue",
+            "writeable": 0,
+            "recordable": 0,
+            "value": 23.5,
+            "unitOfMeasure": "C"
+          }
+        ]
+      }
+    },
+    "101000004": {
+      "_comment": "Condens boiler on a Connect-Key K 30 RF (deviceType k30), heating only: the hot water circuit is listed but all its resources answer 404 (bosch-homecom-hass issue #174). Invented gateway id.",
+      "/notifications": {
+        "id": "/notifications",
+        "type": "errorList",
+        "writeable": 0,
+        "recordable": 0,
+        "values": []
+      },
+      "/heatingCircuits": {
+        "id": "/heatingCircuits",
+        "type": "refEnum",
+        "references": [
+          {
+            "id": "/heatingCircuits/hc1",
+            "uri": "https://pointt-api.bosch-thermotechnology.com/pointt-api/api/v1/gateways/GATEWAY/resource/heatingCircuits/hc1"
+          }
+        ]
+      },
+      "/dhwCircuits": {
+        "id": "/dhwCircuits",
+        "type": "refEnum",
+        "references": [
+          {
+            "id": "/dhwCircuits/dhw1",
+            "uri": "https://pointt-api.bosch-thermotechnology.com/pointt-api/api/v1/gateways/GATEWAY/resource/dhwCircuits/dhw1"
+          }
+        ]
+      },
+      "/system/sensors/temperatures/outdoor_t1": {
+        "id": "/system/sensors/temperatures/outdoor_t1",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 12.0,
+        "unitOfMeasure": "C"
+      },
+      "/heatSources/actualSupplyTemperature": {
+        "id": "/heatSources/actualSupplyTemperature",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 45.5,
+        "unitOfMeasure": "C"
+      },
+      "/heatSources/systemPressure": {
+        "id": "/heatSources/systemPressure",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 1.4,
+        "unitOfMeasure": "bar"
+      },
+      "/heatSources/flameIndication": {
+        "id": "/heatSources/flameIndication",
+        "type": "stringValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": "ch"
+      },
+      "/heatingCircuits/hc1/operationMode": {
+        "id": "/heatingCircuits/hc1/operationMode",
+        "type": "stringValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": "manual",
+        "allowedValues": ["off", "manual", "auto"]
+      },
+      "/heatingCircuits/hc1/roomtemperature": {
+        "id": "/heatingCircuits/hc1/roomtemperature",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 19.8,
+        "unitOfMeasure": "C"
+      },
+      "/heatingCircuits/hc1/currentRoomSetpoint": {
+        "id": "/heatingCircuits/hc1/currentRoomSetpoint",
+        "type": "floatValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": 20.0,
+        "unitOfMeasure": "C",
+        "minValue": 5,
+        "maxValue": 30
+      },
+      "/heatingCircuits/hc1/manualRoomSetpoint": {
+        "id": "/heatingCircuits/hc1/manualRoomSetpoint",
+        "type": "floatValue",
+        "writeable": 1,
+        "recordable": 0,
+        "value": 20.0,
+        "unitOfMeasure": "C",
+        "minValue": 5,
+        "maxValue": 30
+      },
+      "/heatingCircuits/hc1/currentSuWiMode": {
+        "id": "/heatingCircuits/hc1/currentSuWiMode",
+        "type": "stringValue",
+        "writeable": 0,
+        "recordable": 0,
+        "value": "forced"
+      }
+    },
+    "101000005": {
+      "/notifications": {
+        "id": "/notifications",
+        "values": []
+      }
+    }
+  }
+}
