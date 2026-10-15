@@ -277,6 +277,9 @@ long, et sur un « Sie »/« Ihr… » de politesse en allemand. Le store exige 
   correspondance approximative. La climatisation, elle, a une correspondance exacte (`AC_MODE`, `AC_FAN_SPEED`).
 - Les climatiseurs mis en service via **Matter** (`bacon_rac`) passent par un autre service Bosch (MQTT) : non pris
   en charge. `wddw2`, `rrc2`, `commodule` : non pris en charge (listés par « Tester la connexion »).
+- **Tests et `/data`** : tout `registerHandlers` de test reçoit un `Store` dans un dossier temporaire. La
+  session de code tourne en root et écrit dans `/data` sans erreur, le runner de la CI non : un test qui garde le
+  `Store` par défaut passe en local et casse en CI.
 - Le réseau de la session de code refuse `singlekey-id.com` et `pointt-api.bosch-thermotechnology.com` :
   `scripts/probe.mjs` est à lancer d'une machine qui a le réseau.
 
